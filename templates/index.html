@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MonthWise Splitter</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        p {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 25px;
+        }
+        
+        input[type="file"] {
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        button {
+            background: #3b82f6;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        .drop-zone {
+            border: 2px dashed #475569;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        
+        .drop-zone.dragover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📂 MonthWise Splitter</h1>
+        <p>Upload your chat/log file and get clean month-wise outputs instantly.</p>
+        <form id="uploadForm" action="/upload/" method="post" enctype="multipart/form-data">
+            <div class="drop-zone" id="dropZone">
+                <p>Drag & Drop your .txt file here</p>
+                <p>or</p>
+                <input type="file" name="file" id="fileInput" accept=".txt" required>
+            </div>
+            <button type="submit" id="btn">Upload & Process 🚀</button>
+        </form>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const btn = document.getElementById('btn');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            fileInput.files = e.dataTransfer.files;
+        });
+
+        document.getElementById("uploadForm").onsubmit = () => {
+            btn.innerText = "Processing...";
+        };
+    </script>
+</body>
+
+</html>
